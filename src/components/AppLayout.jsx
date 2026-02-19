@@ -1,17 +1,28 @@
 import React from 'react';
+import { Layout } from 'antd';
 
-const AppLayout = ({ children }) => {
-    return (
-        <div className="flex flex-col h-screen bg-black text-white overflow-hidden" style={{ height: '100dvh' }}>
-            {/* Top bar */}
-            <div className="flex items-center px-4 py-3 border-b border-white/10">
-                <span className="text-sm font-medium tracking-wide">Code</span>
-            </div>
-            <div className="flex-1 flex overflow-hidden min-h-0">
-                {children}
-            </div>
-        </div>
-    );
-};
+const { Header, Content } = Layout;
+
+const AppLayout = ({ children }) => (
+    <Layout style={{ height: '100dvh', background: '#000' }}>
+        <Header
+            style={{
+                background: '#000',
+                borderBottom: '1px solid rgba(255,255,255,0.08)',
+                padding: '0 20px',
+                height: 48,
+                lineHeight: '48px',
+                fontSize: 13,
+                color: 'rgba(255,255,255,0.7)',
+                letterSpacing: '0.04em',
+            }}
+        >
+            Code
+        </Header>
+        <Content style={{ flex: 1, display: 'flex', overflow: 'hidden', minHeight: 0 }}>
+            {children}
+        </Content>
+    </Layout>
+);
 
 export default AppLayout;

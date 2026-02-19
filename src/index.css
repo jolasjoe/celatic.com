@@ -2,7 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: #1a1a1a;
-    color: #ffffff;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #fff;
+}
+
+/* hide antd default scrollbar chrome on selects */
+.ant-select-selector {
+    box-shadow: none !important;
 }
