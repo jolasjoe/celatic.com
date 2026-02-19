@@ -21,7 +21,7 @@ function App() {
     const [isRunning, setIsRunning] = useState(false);
     const [result, setResult] = useState(null);
     const [activeTab, setActiveTab] = useState('case1');
-    const [mobilePanel, setMobilePanel] = useState('code'); // 'description' | 'code'
+    const [mobilePanel, setMobilePanel] = useState('code');
 
     const handleLanguageChange = (e) => {
         const newLang = e.target.value;
@@ -47,9 +47,7 @@ function App() {
         }, 1500);
     };
 
-    // ── Shared sub-components ──
-
-    const DescriptionPanel = () => (
+    const descriptionJSX = (
         <div className="h-full flex flex-col bg-[#1e1e1e]">
             <div className="hidden md:flex bg-[#282828] px-4 py-2 border-b border-[#3e3e3e] items-center">
                 <span className="font-semibold text-sm text-gray-300">Description</span>
@@ -60,7 +58,9 @@ function App() {
                     <span className="px-2 py-0.5 rounded-full bg-green-900 text-green-400 text-xs font-medium">Easy</span>
                 </div>
                 <p className="mb-3 md:mb-4 text-gray-300 text-sm md:text-base">
-                    Given an array of integers <code className="bg-[#3e3e3e] px-1 rounded text-sm">nums</code> and an integer <code className="bg-[#3e3e3e] px-1 rounded text-sm">target</code>, return <em>indices of the two numbers such that they add up to <code className="bg-[#3e3e3e] px-1 rounded text-sm">target</code></em>.
+                    Given an array of integers <code className="bg-[#3e3e3e] px-1 rounded text-sm">nums</code> and an integer{' '}
+                    <code className="bg-[#3e3e3e] px-1 rounded text-sm">target</code>, return{' '}
+                    <em>indices of the two numbers such that they add up to <code className="bg-[#3e3e3e] px-1 rounded text-sm">target</code></em>.
                 </p>
                 <p className="mb-3 md:mb-4 text-gray-300 text-sm md:text-base">
                     You may assume that each input would have <strong>exactly one solution</strong>, and you may not use the <em>same</em> element twice.
@@ -68,7 +68,6 @@ function App() {
                 <p className="mb-3 md:mb-4 text-gray-300 text-sm md:text-base">
                     You can return the answer in any order.
                 </p>
-
                 <h3 className="font-bold mt-4 md:mt-6 mb-2 text-sm md:text-base">Example 1:</h3>
                 <pre className="bg-[#282828] p-3 rounded-lg text-xs md:text-sm text-gray-300 overflow-x-auto">
                     {`Input: nums = [2,7,11,15], target = 9
@@ -79,9 +78,8 @@ Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].`}
         </div>
     );
 
-    const EditorPanel = () => (
+    const editorJSX = (
         <div className="h-full flex flex-col">
-            {/* Language selector bar */}
             <div className="bg-[#282828] px-3 md:px-4 py-2 border-b border-[#3e3e3e] flex justify-between items-center">
                 <select
                     value={language}
@@ -93,13 +91,11 @@ Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].`}
                 </select>
             </div>
 
-            {/* Editor + Console */}
             <div className="flex-1 relative flex flex-col min-h-0">
                 <div className={`transition-all duration-300 ${result ? 'h-[55%] md:h-[60%]' : 'h-full'}`}>
                     <CodeEditor language={language} code={code} onChange={setCode} />
                 </div>
 
-                {/* Console/Result Pane */}
                 {result && (
                     <div className="h-[45%] md:h-[40%] bg-[#1e1e1e] border-t border-[#3e3e3e] flex flex-col">
                         <div className="flex items-center space-x-2 md:space-x-4 px-3 md:px-4 py-2 bg-[#282828] border-b border-[#3e3e3e]">
@@ -122,7 +118,6 @@ Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].`}
                                     </button>
                                 ))}
                             </div>
-
                             {result.cases.map((c) => (
                                 c.id === activeTab && (
                                     <div key={c.id} className="space-y-2 font-mono text-xs md:text-sm">
@@ -146,7 +141,6 @@ Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].`}
                 )}
             </div>
 
-            {/* Bottom Action Bar */}
             <div className="h-11 md:h-12 bg-[#282828] border-t border-[#3e3e3e] flex items-center justify-end px-3 md:px-4 space-x-2 md:space-x-3">
                 <button
                     onClick={handleRun}
@@ -170,9 +164,8 @@ Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].`}
 
     return (
         <AppLayout>
-            {/* ── Mobile: Tabbed layout ── */}
+            {/* Mobile: Tabbed layout */}
             <div className="flex md:hidden flex-col w-full h-full min-h-0">
-                {/* Tab switcher */}
                 <div className="flex bg-[#282828] border-b border-[#3e3e3e]">
                     <button
                         onClick={() => setMobilePanel('description')}
@@ -187,20 +180,18 @@ Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].`}
                         Code
                     </button>
                 </div>
-
-                {/* Active panel */}
                 <div className="flex-1 min-h-0">
-                    {mobilePanel === 'description' ? <DescriptionPanel /> : <EditorPanel />}
+                    {mobilePanel === 'description' ? descriptionJSX : editorJSX}
                 </div>
             </div>
 
-            {/* ── Desktop: Split layout ── */}
+            {/* Desktop: Split layout */}
             <div className="hidden md:flex w-full h-full">
                 <div className="w-1/2 h-full border-r border-[#3e3e3e]">
-                    <DescriptionPanel />
+                    {descriptionJSX}
                 </div>
                 <div className="w-1/2 h-full">
-                    <EditorPanel />
+                    {editorJSX}
                 </div>
             </div>
         </AppLayout>
