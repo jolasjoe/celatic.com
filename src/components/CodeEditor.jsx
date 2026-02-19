@@ -16,7 +16,7 @@ const CodeEditor = ({ language, code, onChange }) => {
                         fontSize: window.innerWidth < 768 ? 13 : 14,
                         scrollBeyondLastLine: false,
                         automaticLayout: true,
-                        fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+
                         wordWrap: 'on',
                         lineNumbers: window.innerWidth < 768 ? 'off' : 'on',
                         folding: window.innerWidth >= 768,
